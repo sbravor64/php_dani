@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +14,42 @@
     <h1>Cookies: Creació i destrucció</h1>
 
     <?php
-        session_start();
-        if(isset($_POST['segundos'])){
-            $durada = $_POST['segundos'];
-            echo "Cookies creada. Es destruirà en $durada segons.";
-        } else echo "Indica la duración de la cookie para empezar...";
+
+        if(isset($_POST['crear'])){
+            if (!empty($_POST['segundos'])){
+                $_SESSION["segundos"] = $_POST["segundos"];
+                $time = $_POST['segundos'];
+                setcookie('cookieTemporal','Hola, soy una cookie',time() + $time);
+
+                echo "Cookies creada. Es destruirà en " . (($_SESSION["segundos"]) - time()) . " segons.";
+
+            } else {
+                echo "No has indicado la duración de la cookie";
+            }
+
+        } else if(isset($_POST['comprovar']) ){
+
+            if(isset($_COOKIE['cookieTemporal'])){
+                    echo "Cookies creada. Es destruirà en " . (($_SESSION["segundos"]) - time()) . " segons.";
+            } else {
+                echo "No hay cookie para comprovar";
+            }
+
+        } else if(isset($_POST['destruir'])){
+
+            if(isset($_COOKIE['cookieTemporal'])){
+            setcookie ("cookieTemporal", "", time() - 3600);
+            echo "Cookie destruida";
+            } else {
+                echo "No hay cookie para destruir";
+            }
+
+        } else if (!isset($_POST['crear'])) {
+
+            echo "Crea la cookie indicándole su duración";
+
+        }
+
     ?>
 
     <p> Tria una opció:</p>
@@ -41,18 +75,5 @@
         </ul>
     </form>
 
-    <?php
-        if(isset($_POST['crear'])){
-            if (!empty($_POST['segundos'])){
-                $time = $_POST['segundos'];
-                setcookie("cookie","Hola, soy una cookie",time() + $time);
-            }
-        } else if(isset($_POST['comprovar']) && isset($_POST['segundos']) ){
-                $contenido = $_COOKIE["cookie"];
-                echo "hoala";
-        }
-    ?>
-    
-    
 </body>
 </html>

@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,36 +12,38 @@
 
     <?php
 
-        if(isset($_POST['crear'])){
-            if (!empty($_POST['segundos'])){
-                $_SESSION["segundos"] = $_POST["segundos"];
-                $time = $_POST['segundos'];
-                setcookie('cookieTemporal','Hola, soy una cookie',time() + $time);
+        if(isset($_POST["crear"])){
+            if (!empty($_POST["segundos"])){
+                $durada =  $_POST['segundos'];
+                $valorCookie = time() + $durada;
+                setcookie('cookieTemporal', $valorCookie, time() + $durada);
 
-                echo "Cookies creada. Es destruirà en " . (($_SESSION["segundos"]) - time()) . " segons.";
+                echo "Cookies creada. Es destruirà en $durada segons.";
 
             } else {
-                echo "No has indicado la duración de la cookie";
+                echo "<p style='color:red;'>No has indicado la duración de la cookie</p>";
             }
 
-        } else if(isset($_POST['comprovar']) ){
+        } else if(isset($_POST["comprovar"]) ){
 
-            if(isset($_COOKIE['cookieTemporal'])){
-                    echo "Cookies creada. Es destruirà en " . (($_SESSION["segundos"]) - time()) . " segons.";
+            if(isset($_COOKIE["cookieTemporal"])){
+                $tiempoRestante = $_COOKIE["cookieTemporal"] - time();
+                if ($tiempoRestante) echo "Cookies creada. Es destruirà en $tiempoRestante segons.";
+                else echo "Cookie Expirada";
             } else {
-                echo "No hay cookie para comprovar";
+                echo "<p style='color:red;'>No hay cookie para comprovar</p>";
             }
 
-        } else if(isset($_POST['destruir'])){
+        } else if(isset($_POST["destruir"])){
 
-            if(isset($_COOKIE['cookieTemporal'])){
+            if(isset($_COOKIE["cookieTemporal"])){
             setcookie ("cookieTemporal", "", time() - 3600);
             echo "Cookie destruida";
             } else {
-                echo "No hay cookie para destruir";
+                echo "<p style='color:red;'>No hay cookie para destruir</p>";
             }
 
-        } else if (!isset($_POST['crear'])) {
+        } else if (!isset($_POST["crear"])) {
 
             echo "Crea la cookie indicándole su duración";
 
@@ -54,7 +53,7 @@
 
     <p> Tria una opció:</p>
     
-    <form action="index.php" method="post">
+    <form action="6.php" method="post">
         <ul>
             <li>
                 <label for="segundos">Crear una cookie amb una duració de:</label>

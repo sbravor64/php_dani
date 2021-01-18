@@ -12,9 +12,9 @@ function e3($radi, $alçada){
     return $volum;
 }
 
-const debug = 1;
+const DEBUG = 1;
 function e4($missatge){
-    if (debug == 1) {
+    if (DEBUG == 1) {
         echo"<p style='border: ridge #ff0000 1px;'> <b>Debug:</b> <br>$missatge</br></p>";
     }
 }
@@ -22,8 +22,8 @@ function e4($missatge){
 echo "<h3><b>A) El resultat de la funció passant com a pàmetres 1,1,1,1,1 és: </b></h3>";
 e1(1,1,1,1,1);
 
-$tmp = e2(2,5,1,8,10);
 echo '<h3><b>B) $tmp = El resultat de la funció passant com a paràmetres 2,5,1,8,10 </b></h3>';
+$tmp = e2(2,5,1,8,10);
 echo '$tmp = ';
 echo $tmp;
 
